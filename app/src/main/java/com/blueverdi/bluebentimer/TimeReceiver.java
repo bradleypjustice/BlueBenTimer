@@ -15,8 +15,10 @@ import android.content.Intent;
 import android.net.Uri;
 
 public class TimeReceiver extends BroadcastReceiver {
+    private static final String TAG = "TimeReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
+        MyLog.d(TAG, "received timer");
         Intent i = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, 0);

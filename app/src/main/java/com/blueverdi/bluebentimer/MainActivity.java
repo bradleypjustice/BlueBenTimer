@@ -207,17 +207,20 @@ public class MainActivity extends Activity{
 
 
     public void setAlarmManager(long timerExpires) {
+        MyLog.d(TAG, "setting alarm");
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, TimeReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= 21) {
             am.setAlarmClock(new AlarmManager.AlarmClockInfo(timerExpires, sender), sender);
+//            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timerExpires, sender);
         } else {
-            am.set(AlarmManager.RTC_WAKEUP, timerExpires, sender);
+            am.setExact(AlarmManager.RTC_WAKEUP, timerExpires, sender);
         }
     }
 
     public void removeAlarmManager() {
+        MyLog.d(TAG, "removing alarm");
         Intent intent = new Intent(this, TimeReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
